@@ -54,7 +54,7 @@
 	fetcher.delegate = aDelegate;
 	fetcher.didFinishSelector = finishSelector;
 	fetcher.didFailSelector = failSelector;
-	return self;
+	return fetcher;
 }
 
 - (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector {
