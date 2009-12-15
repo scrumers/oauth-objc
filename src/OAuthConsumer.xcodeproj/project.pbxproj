@@ -313,11 +313,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				RUN_CLANG_STATIC_ANALYZER = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
@@ -327,14 +328,49 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				RUN_CLANG_STATIC_ANALYZER = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
+		};
+		6FFA507510D7C60F00965609 /* Analyze */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Analyze;
+		};
+		6FFA507610D7C60F00965609 /* Analyze */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/OAuthConsumer.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = OAuthConsumer_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = OAuthConsumer;
+			};
+			name = Analyze;
 		};
 /* End XCBuildConfiguration section */
 
@@ -343,6 +379,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB921F08733DC00010E9CD /* Debug */,
+				6FFA507610D7C60F00965609 /* Analyze */,
 				1DEB922008733DC00010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -352,6 +389,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB922308733DC00010E9CD /* Debug */,
+				6FFA507510D7C60F00965609 /* Analyze */,
 				1DEB922408733DC00010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
