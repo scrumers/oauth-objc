@@ -45,6 +45,7 @@
 		[self setKey:[coder decodeObjectForKey:@"key"]];
 		[self setSecret:[coder decodeObjectForKey:@"secret"]];
 	}
+	return self;
 }
 
 - (void) encodeWithCoder: (NSCoder *)coder {
