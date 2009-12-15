@@ -33,6 +33,18 @@
 
 #pragma mark init
 
++ (id)tokenWithKey:(NSString *)aKey secret:(NSString *)aSecret {
+	return [[[OAToken alloc] initWithKey:aKey secret:aSecret] autorelease];
+}
+
++ (id)tokenWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix {
+	return [[[OAToken alloc] initWithUserDefaultsUsingServiceProviderName:provider prefix:prefix] autorelease];
+}
+
++ (id)tokenWithHTTPResponseBody:(NSString *)body {
+	return [[[OAToken alloc] initWithHTTPResponseBody:body] autorelease];
+}
+
 - (id)init {
     [super init];
     self.key = @"";

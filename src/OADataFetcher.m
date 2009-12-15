@@ -31,6 +31,10 @@
 @property(nonatomic, retain) NSURLResponse *response;
 @property(nonatomic, retain) NSMutableData *responseData;
 @property(nonatomic, retain) NSURLConnection *connection;
+@property(nonatomic, retain) OAMutableURLRequest *request;
+@property(nonatomic, assign) id delegate;
+@property(nonatomic, assign) SEL didFinishSelector;
+@property(nonatomic, assign) SEL didFailSelector;
 @end
 
 
@@ -39,13 +43,29 @@
 @synthesize connection;
 @synthesize response;
 @synthesize responseData;
+@synthesize request;
+@synthesize delegate;
+@synthesize didFinishSelector;
+@synthesize didFailSelector;
+
++ (id)fetcherWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector {
+	OADataFetcher *fetcher = [[[OADataFetcher alloc] init] autorelease];
+	fetcher.request = aRequest;
+	fetcher.delegate = aDelegate;
+	fetcher.didFinishSelector = finishSelector;
+	fetcher.didFailSelector = failSelector;
+	return self;
+}
 
 - (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector {
-    request = aRequest;
+    self.request = aRequest;
     delegate = aDelegate;
     didFinishSelector = finishSelector;
     didFailSelector = failSelector;
-	
+    [self fetchData];
+}
+
+- (void)fetchData {
     [request prepare];
 	
     self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
@@ -62,6 +82,7 @@
 	[connection release], connection = nil;
 	[responseData release], responseData = nil;
 	[response release], response = nil;
+	[request release], request = nil;
 	[super dealloc];
 }
 

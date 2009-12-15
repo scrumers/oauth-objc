@@ -38,4 +38,8 @@
     return self;
 }
 
++ (id)ticketWithRequest:(OAMutableURLRequest *)aRequest response:(NSURLResponse *)aResponse didSucceed:(BOOL)success {
+	return [[[OAServiceTicket alloc] initWithRequest:aRequest response:aResponse didSucceed:success] autorelease];
+}
+
 @end

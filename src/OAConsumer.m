@@ -38,4 +38,8 @@
 	return self;
 }
 
++ (id)consumerWithKey:(NSString *)aKey secret:(NSString *)aSecret {
+	return [[[OAConsumer alloc] initWithKey:aKey secret:aSecret] autorelease];
+}
+
 @end

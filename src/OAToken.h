@@ -37,5 +37,8 @@
 - (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;
 - (id)initWithHTTPResponseBody:(NSString *)body;
 - (int)storeInUserDefaultsWithServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;
++ (id)tokenWithKey:(NSString *)aKey secret:(NSString *)aSecret;
++ (id)tokenWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;
++ (id)tokenWithHTTPResponseBody:(NSString *)body;
 
 @end

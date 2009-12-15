@@ -36,5 +36,6 @@
 @property(copy, readwrite) NSString *secret;
 
 - (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret;
++ (id)consumerWithKey:(NSString *)aKey secret:(NSString *)aSecret;
 
 @end
