@@ -35,7 +35,7 @@
         encodedParameters = [[self URL] query];
     } else {
         // POST, PUT
-        encodedParameters = [[NSString alloc] initWithData:[self HTTPBody] encoding:NSASCIIStringEncoding];
+        encodedParameters = [[[NSString alloc] initWithData:[self HTTPBody] encoding:NSASCIIStringEncoding] autorelease];
     }
     
     if ((encodedParameters == nil) || ([encodedParameters isEqualToString:@""])) {
@@ -76,6 +76,7 @@
         [self setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
         [self setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
+	[encodedParameterPairs release];
 }
 
 @end

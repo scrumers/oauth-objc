@@ -30,11 +30,13 @@
 @interface OADataFetcher ()
 @property(nonatomic, retain) NSURLResponse *response;
 @property(nonatomic, retain) NSMutableData *responseData;
+@property(nonatomic, retain) NSURLConnection *connection;
 @end
 
 
 @implementation OADataFetcher
 
+@synthesize connection;
 @synthesize response;
 @synthesize responseData;
 
@@ -45,47 +47,51 @@
     didFailSelector = failSelector;
 	
     [request prepare];
-
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+	
+    self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	if (connection) {
 		self.responseData = [NSMutableData data];
 	} else {
 		OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request response:nil didSucceed:NO];
 		[delegate performSelector:didFailSelector withObject:ticket withObject:nil];
+		[ticket release];
 	}
 }
 
 - (void)dealloc {
+	[connection release], connection = nil;
 	[responseData release], responseData = nil;
 	[response release], response = nil;
 	[super dealloc];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)theResponse {
+- (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)theResponse {
 	self.response = theResponse;
     [responseData setLength:0];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+- (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data {
 	[responseData appendData:data];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    [connection release];
-	
+- (void)connectionDidFinishLoading:(NSURLConnection *)theConnection {
 	BOOL success = [(NSHTTPURLResponse *)response statusCode] < 400;
 	OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request response:response didSucceed:success];
 	[delegate performSelector:didFinishSelector withObject:ticket withObject:responseData];
+	[ticket release];
 	
+    self.connection = nil;
+    self.response = nil;
     self.responseData = nil;
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [connection release];
-	
-	OAServiceTicket *ticket= [[OAServiceTicket alloc] initWithRequest:request response:response didSucceed:NO];
+- (void)connection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error {
+    OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request response:response didSucceed:NO];
 	[delegate performSelector:didFailSelector withObject:ticket withObject:error];
+	[ticket release];
 	
+	self.connection = nil;
+    self.response = nil;
     self.responseData = nil;
 }
 

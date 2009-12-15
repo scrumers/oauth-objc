@@ -31,6 +31,7 @@
 @interface OADataFetcher : NSObject {
 @private
     OAMutableURLRequest *request;
+	NSURLConnection *connection;
     NSURLResponse *response;
     NSMutableData *responseData;
     id delegate;
