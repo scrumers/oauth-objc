@@ -52,7 +52,7 @@
     return self;
 }
 
-- (id) initWithCoder: (NSCoder *)coder {
+- (id)initWithCoder:(NSCoder *)coder {
 	if (self = [super init]) {
 		[self setKey:[coder decodeObjectForKey:@"key"]];
 		[self setSecret:[coder decodeObjectForKey:@"secret"]];
@@ -60,7 +60,7 @@
 	return self;
 }
 
-- (void) encodeWithCoder: (NSCoder *)coder {
+- (void)encodeWithCoder:(NSCoder *)coder {
 	[coder encodeObject:key forKey:@"key"];
 	[coder encodeObject:secret forKey:@"secret"];
 }
@@ -75,7 +75,6 @@
 - (id)initWithHTTPResponseBody:(NSString *)body {
     [super init];
     NSArray *pairs = [body componentsSeparatedByString:@"&"];
-    
     for (NSString *pair in pairs) {
         NSArray *elements = [pair componentsSeparatedByString:@"="];
         if ([[elements objectAtIndex:0] isEqualToString:@"oauth_token"]) {
@@ -88,26 +87,27 @@
     return self;
 }
 
-
-- (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix
-{
-[super init];
-NSString *theKey = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
-NSString *theSecret = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
-if (theKey == NULL || theSecret == NULL)
-	return(nil);
-self.key = theKey;
-self.secret = theSecret;
-return(self);
+- (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix {
+	[super init];
+	NSString *theKey = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
+	NSString *theSecret = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
+	if (theKey == NULL || theSecret == NULL) return(nil);
+	self.key = theKey;
+	self.secret = theSecret;
+	return(self);
 }
 
+- (int)storeInUserDefaultsWithServiceProviderName:(NSString *)provider prefix:(NSString *)prefix {
+	[[NSUserDefaults standardUserDefaults] setObject:self.key forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
+	[[NSUserDefaults standardUserDefaults] setObject:self.secret forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	return(0);
+}
 
-- (int)storeInUserDefaultsWithServiceProviderName:(NSString *)provider prefix:(NSString *)prefix
-{
-[[NSUserDefaults standardUserDefaults] setObject:self.key forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
-[[NSUserDefaults standardUserDefaults] setObject:self.secret forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
-[[NSUserDefaults standardUserDefaults] synchronize];
-return(0);
++ (void)removeFromUserDefaultsWithServiceProviderName:(NSString *)provider prefix:(NSString *)prefix {
+	[[NSUserDefaults standardUserDefaults] setObject:nil forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
+	[[NSUserDefaults standardUserDefaults] setObject:nil forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

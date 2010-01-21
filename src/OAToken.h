@@ -40,5 +40,6 @@
 + (id)tokenWithKey:(NSString *)aKey secret:(NSString *)aSecret;
 + (id)tokenWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;
 + (id)tokenWithHTTPResponseBody:(NSString *)body;
++ (void)removeFromUserDefaultsWithServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;
 
 @end
